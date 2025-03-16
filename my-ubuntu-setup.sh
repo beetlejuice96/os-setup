@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ubuntu automatic setup script
-# This script installs: Docker, Docker Compose, VSCode, Google Chrome, Git, NVM, DBeaver, Postman
+# This script installs: Docker, Docker Compose, VSCode, Google Chrome, Git, NVM, DBeaver, Postman, Discord, Spotify
 
 # Exit on error
 set -e
@@ -38,6 +38,7 @@ rm -f packages.microsoft.gpg
 sudo apt update
 sudo apt install -y code
 
+# Warp Terminal installation removed as it will be installed separately
 
 # Install Google Chrome
 echo "Installing Google Chrome..."
@@ -63,6 +64,19 @@ wget -O - https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
 echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
 sudo apt update
 sudo apt install -y dbeaver-ce
+
+# Install Discord
+echo "Installing Discord..."
+wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+sudo apt install -y ./discord.deb
+rm discord.deb
+
+# Install Spotify
+echo "Installing Spotify..."
+curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt update
+sudo apt install -y spotify-client
 
 # Install Postman
 echo "Installing Postman..."
