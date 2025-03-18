@@ -133,9 +133,11 @@ fi
 # Install Slack
 if ! command -v slack &> /dev/null; then
     echo "Installing Slack..."
-    wget -O slack.deb "https://downloads.slack-edge.com/releases/linux/4.29.149/prod/x64/slack-desktop-4.29.149-amd64.deb"
-    sudo apt install -y ./slack.deb
-    rm slack.deb
+    sudo apt install -y wget
+    wget -qO - https://slack.com/keys/public.key | sudo apt-key add -
+    echo "deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main" | sudo tee /etc/apt/sources.list.d/slack.list
+    sudo apt update
+    sudo apt install -y slack-desktop
 else
     echo "Slack is already installed"
 fi
